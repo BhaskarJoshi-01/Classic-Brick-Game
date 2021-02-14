@@ -18,11 +18,11 @@ class paddle:
         for i in range(0,paddle_size[self.type]):
             paddle+='#'
         paddle+='$'
-        # print("added")
+        # print("added")    
         size_of_paddle=len(paddle)
         j=0
         start=self.cur_X-((int)(size_of_paddle/2))-1
-        end=self.cur_X+((int)(size_of_paddle/2))+1
+        end=self.cur_X+((int)(size_of_paddle/2))+2
         #putting blank space in paddle's loc
         for i in range(start,end):
             screen_array[self.cur_Y][i]=' '
