@@ -18,6 +18,7 @@ class screen:
             print()
 
 
+class Create_Scenery(screen):
     def create_scenery(self): #boder of game
         till_i=self.height
         till_j=self.width
