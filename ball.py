@@ -51,11 +51,10 @@ class Ball:
                 screen_array[previous_x][previous_y] = ' '
                 return diff_flag[0]
         else:
-            # size=bricks.size
             array = [bricks_font_color[i]+bricks_color[i]+bricks[i]
                      [1]+Style.RESET_ALL for i in range(0, bricks.size)]
             screen_array[previous_x][previous_y] = ' '
-            point_is = 1
+            # point_is = 1
 
             if((tmpx-5) <= 0):
                 self.vx = -1*self.vx

@@ -2,7 +2,7 @@ from art import *
 import numpy as np
 from colorama import Fore, Back, Style
 import math
-ball_graphic = "0"
+# ball_graphic = "0"
 
 bricks = np.array(["[qqqq]", "[wwww]",
                    "[qqqq]", "[wwww]"])
@@ -25,7 +25,7 @@ byellow = "\033[43m"
 bblue = "\033[44m"
 
 
-bricks_color=np.array([bgreen,byellow,bred,bblue])
+bricks_color=np.array([bred,byellow,bgreen,bblue])
 bricks_font_color=np.array([fyellow,fred,fblue,fgreen])
 brick_orientation = np.array([b_1])
 instructions = print(Fore.YELLOW+art.instructions_art)

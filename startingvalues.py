@@ -1,5 +1,6 @@
 import time
 import numpy as np
+from objects import * 
 height= 45
 width = 165
 brick_starting_x=15
