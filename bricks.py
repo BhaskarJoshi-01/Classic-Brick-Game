@@ -23,30 +23,54 @@ class Bricks:
             for j in range(0,bricks_array_len):
                 splited_bricks=np.array(bricks_array[i].split('&'))
                 temp=self.brick_start_y
-                for k in range(splited_bricks.size):
+                for k in range(0,splited_bricks.size):
                     for z in range(0,6):
-                        screen_array[i+self.brick_start_x][temp]=Back.YELLOW+Fore.RED+bricks[int(splited_bricks[k])][z]+Style.RESET_ALL
+                        alpha = bricks_color[int(splited_bricks[k])] + bricks_font_color[int(splited_bricks[k])]
+                        screen_array[i+self.brick_start_x][temp] = alpha +bricks[int(splited_bricks[k])][z] + "\033[0m"
                         temp = temp+1
+                        # print(str(Back.BLACK+Fore.RED+bricks[int(splited_bricks[k])][z]+Style.RESET_ALL))
+                        # for l in range(0,len(screen_array[i+self.brick_start_x][temp-1])):
+                        #     print(screen_array[i+self.brick_start_x][temp-1][l])
+
+    # def remove_brick_inscreen(self,screen_array,x,y):
+    #     pt1=y
+    #     pnt=10
+    #     f=0
+    #     pt2=pt1
+    #     print(screen_array,x,pt2,pnt)
+    #     if(screen_array[x][pt2][pnt]==']'):
+    #         f=1
+    #     while(screen_array[x][pt1][pnt]!='['):
+    #         screen_array[x][pt1]=' '
+    #         pt1=pt1-1
+    #     screen_array[x][pt1]=' '
+    #     pt2=pt2+1
+    #     if (f):
+    #         pass
+    #     else:
+    #         while(screen_array[x][pt2][pnt]!=']'):
+    #             screen_array[x][pt2]=' '
+    #             pt2=pt2+1
+    #         screen_array[x][pt2]=' '
+
 
     def remove_brick_inscreen(self,screen_array,x,y):
-        pt1=y
-        f=0
-        pt2=pt1
-        if(screen_array[x][pt2][10]==']'):
-            f=1
-        while(screen_array[x][pt1][10]!='['):
-            screen_array[x][pt1]=' '
-            pt1=pt1-1
-        screen_array[x][pt1]=' '
-        pt2=pt2+1
-        if (flag):
-            pass
-        else:
-            while(screen_array[x][pt2][10]!=']'):
-                screen_array[x][pt2]=' '
-                pt2=pt2+1
-            screen_array[x][pt2]=' '
-
-
+        """ This function is used to remove bricks that are being hit
+        """
+        pointer_1 = y
+        pointer_2 = y
+        flag = 0 
+        if(screen_array[x][pointer_2][10]==']'):
+            flag = 1
+        while (screen_array[x][pointer_1][10]!='['):
+            screen_array[x][pointer_1] = ' '
+            pointer_1 -= 1
+        screen_array[x][pointer_1] = ' '
+        pointer_2 += 1
+        if(not flag):
+            while (screen_array[x][pointer_2][10]!=']'):
+                screen_array[x][pointer_2] = ' '
+                pointer_2 += 1
+            screen_array[x][pointer_2] = ' '
 
 

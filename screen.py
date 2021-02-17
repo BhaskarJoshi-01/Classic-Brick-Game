@@ -1,12 +1,12 @@
 import numpy as np
 import sys
-
+from startingvalues import *
 '''This class creates and displays screen'''
 class screen:
     def __init__(self,height,width):
+        self.screenarray=np.full((height,width)," ",dtype='<U25')
         self.height=height
         self.width=width
-        self.screenarray=np.full((self.height,self.width)," ",dtype='<U25')
     
     
     def showscreen(self):

@@ -1,6 +1,6 @@
 from objects import *
 from colorama import Fore, Back, Style
-
+from startingvalues import width
 class paddle:
     def __init__(self,cur_X,cur_Y,cur_type):
         self.cur_X=cur_X
@@ -21,12 +21,21 @@ class paddle:
         # print("added")    
         size_of_paddle=len(paddle)
         j=0
-        start=self.cur_X-((int)(size_of_paddle/2))-1
-        end=self.cur_X+((int)(size_of_paddle/2))+2
+        start=self.cur_X-((int)(size_of_paddle/2))
+        end=self.cur_X+((int)(size_of_paddle/2))+1
         #putting blank space in paddle's loc
-        for i in range(start,end):
-            screen_array[self.cur_Y][i]=' '
+        start_val=start-2 if start<=3 else start-3
+        end_val = 2+end if end-width+6>0 else 3+end
+
+        for i in range(start_val,end_val):
+            if(screen_array[self.cur_Y][i]!='⬤' or screen_array[self.cur_Y][i]!='|'):
+                screen_array[self.cur_Y][i]=' '
+        
+
+        # for i in range(start,end):
+        #     screen_array[self.cur_Y][i]=' '
         # putting paddle where it has to be
-        for i in range(start+1,end-1):
+        for i in range(start,end):
             screen_array[self.cur_Y][i]=paddle[j]
             j=j+1
+        screen_array[self.cur_Y][0]='@'
