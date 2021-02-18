@@ -4,14 +4,14 @@ from colorama import Fore, Back, Style
 import math
 # ball_graphic = "0"
 
-bricks = np.array(["[qqqq]", "[wwww]",
-                   "[eeee]", "[rrrr]"])
+# bricks = np.array(["[qqqq]", "[wwww]",
+#                    "[eeee]", "[rrrr]"])
 
 paddle_size = np.array([5, 9, 13])
 
 # brick pattern
-b_1 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
-    " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1"+" "+"2&2&2&2&2&2&2&2&2&2"
+# b_1 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
+#     " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1"+" "+"2&2&2&2&2&2&2&2&2&2"
 
 # brick pattern
 fred = "\033[31m"
@@ -24,10 +24,11 @@ bgreen = "\033[42m"
 byellow = "\033[43m"
 bblue = "\033[44m"
 
+boolean_val=[False,True]
 
-bricks_color=np.array([bred,byellow,bgreen,bblue])
-bricks_font_color=np.array([fyellow,fred,fblue,fgreen])
-brick_orientation = np.array([b_1])
+# bricks_color=np.array([bred,byellow,bgreen,bblue])
+# bricks_font_color=np.array([fyellow,fred,fblue,fgreen])
+# brick_orientation = np.array([b_1])
 instructions = print(Fore.YELLOW+art.instructions_art)
 print(Back.GREEN+'Press g to start game')
 print(Fore.RED+'Press q to quit game')
@@ -39,6 +40,8 @@ print()
 print(Fore.BLUE+'Press d to move board right')
 print(Style.RESET_ALL)
 
+updatedx=0
+updatedy=0
 
 def print_instructions():
     return instructions

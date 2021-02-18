@@ -5,9 +5,19 @@ from colorama import Fore, Back, Style
 from startingvalues import *
 
 sys_random = rnd.SystemRandom()
-brick_orientation_size = brick_orientation.size
 bricks_life = [0, 1, 2, 1000]
 size_of_str=6
+bricks = np.array(["[qqqq]", "[wwww]",
+                   "[eeee]", "[rrrr]"])
+
+b_1 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
+    " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1"+" "+"2&2&2&2&2&2&2&2&2&2"
+
+bricks_color=np.array([bred,byellow,bgreen,bblue])
+bricks_font_color=np.array([fyellow,fred,fblue,fgreen])
+brick_orientation = np.array([b_1])
+brick_orientation_size = brick_orientation.size
+
 
 class Brick_inherit:
     def __init__(self, btype, x, y):
@@ -20,10 +30,10 @@ class Brick_inherit:
     def downgrade_blife(self,value,go_through):
 
         score=0
-        score=score+self.update_score(go_through)
+        score=self.update_score(go_through)+score
         if(go_through):
-            self.type=-1
             self.life=0
+            self.type=self.life-1
         elif(self.type!=3):
             self.life=bricks_life[self.type]
             self.type=self.type-1

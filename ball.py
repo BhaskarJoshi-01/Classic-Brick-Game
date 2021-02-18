@@ -14,29 +14,33 @@ class Ball:
             screen_array[self._x][self._y] = '⬤'
         self.vx = vx
         self.vy = vy
-        self._thru_ball=False
-        self.sticky_ball=False
-        self.sticky_at_start=True
+        self._thru_ball=boolean_val[0]
+        self.sticky_ball=boolean_val[0]
+        self.sticky_at_start=boolean_val[1]
 
     def update_ball_inscreen(self, screen_array):
         if(screen_array[self._x][self._y] == ' '):
             screen_array[self._x][self._y] = '⬤'
 
 
-    def update_xandy(self,x,y):
-        self._x=x
-        self._y=y
+    
 
     def ball_sticky_movement(self,screen_array,x,y):
         screen_array[self._x][self._y]=' '
-        self._x=self._x+x
-        self._y=self._y+y
+        self._x=x+self._x
+        self._y=y+self._y
         screen_array[self._x][self._y]='⬤'
 
     def update_speed(self,x,y):
-        self.vx=y
-        self.vy=x
-    
+        self.vx=y+updatedy
+        self.vy=x+updatedx
+
+
+    def update_xandy(self,x,y):
+        self._y=(y)+updatedy
+        # print("here")
+        self._x=(x+updatedx)
+
     def ret_class_inti(self):
         return (self.vx,self.vy,self._x,self._y)
 
@@ -148,13 +152,16 @@ class Ball:
                             screen_array[g1][g2] != '>' or 
                             screen_array[g1][g2] != '<'):
                             if(screen_array[g1][g2]!=' '):
-                                (score_,choosen_value) = bricks_class.remove_brick_onscreen(screen_array,g1,g2,True)
+                                (score_,choosen_value) = bricks_class.remove_brick_onscreen(screen_array,g1,g2,boolean_val[1])
 
-
+            if(self._thru_ball):
+                # self._x=tmpx
+                # self._y=tmpy
+                pass
             if(screen_array[tmpx][tmpy]==' ' and not self._thru_ball):
+                screen_array[tmpx][tmpy]='⬤'
                 self._x=tmpx
                 self._y=tmpy
-                screen_array[tmpx][tmpy]='⬤'
                 return (diff_flag[3],score_is,chosen_val)
             elif(self._thru_ball):
                 self._x=tmpx
