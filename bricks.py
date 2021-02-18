@@ -17,13 +17,25 @@ class Brick_inherit:
         self.startingx = x
         self.startingy = y
 
-    def downgrade_blife(self):
-        if(self.type == 3):
-            pass
-        else:
-            self.life = bricks_life[self.type]
-            self.type = self.type-1
-            return (self.life, self.type)
+    def downgrade_blife(self,value,go_through):
+
+        score=0
+        score=score+self.update_score(go_through)
+        if(go_through):
+            self.type=-1
+            self.life=0
+        elif(self.type!=3):
+            self.life=bricks_life[self.type]
+            self.type=self.type-1
+
+        # if(self.type == 3):
+        #     pass
+        # else:
+        #     self.life = bricks_life[self.type]
+        #     self.type = self.type-1
+
+            return (self.life, self.type,score)
+        return(self.life,self.type,score)
 
     def bricks_color_change(self, btype):
         self.color = bricks_color[btype]+bricks_font_color[btype]
@@ -31,6 +43,22 @@ class Brick_inherit:
 
     def retxy(self):
         return (self.startingx, self.startingy)
+
+    def update_score(self,go_through):
+        score=0
+        if(not go_through):
+            score= score+50
+        else:
+            if(self.type==2):
+                score=score+150
+            elif(self.type==1):
+                score=score+100
+            elif(self.type==0):
+                score=score+50
+            else:
+                score=score+200
+        return score
+            
 
 
 class Bricks:
@@ -40,6 +68,11 @@ class Bricks:
             0, ((brick_orientation_size)-1))].split()
         self.brick_start_y = brick_starting_y
         self.brick_data = np.array([])
+        self.sys_random=rnd.SystemRandom()
+        self.poweruparray=[0 for i in range(1,30)]
+        for i in range(0,6):
+            self.poweruparray[i]=6-i
+        print(self.poweruparray)
 
     def update_bricks_inscreen(self, screen_array):
         temp = 0
@@ -49,77 +82,83 @@ class Bricks:
         for i in range(0, bricks_array_size):
             bricks_array_len = len(bricks_array[i])
             for j in range(0, bricks_array_len):
-                splited_bricks = np.array(bricks_array[i].split('&'))
-                temp = self.brick_start_y
                 brick_temp = []
-                for k in range(0, splited_bricks.size):
-                    brick_temp.insert(k, Brick_inherit(int(splited_bricks[k]),i+self.brick_start_x,temp))
+                temp = self.brick_start_y
+                splited_bricks = np.array(bricks_array[i].split('&'))
+                splited_bricks_size = splited_bricks.size
+                for k in range(0, splited_bricks_size):
+                    posn = splited_bricks[k]
+                    brick_temp.insert(k, Brick_inherit(
+                        int(posn), self.brick_start_x+i, temp))
                     for z in range(0, 6):
                         alpha = bricks_color[int(
-                            splited_bricks[k])] + bricks_font_color[int(splited_bricks[k])]
-                        screen_array[i+self.brick_start_x][temp] = alpha + \
-                            bricks[int(splited_bricks[k])][z] + "\033[0m"
+                            posn)] + bricks_font_color[int(posn)]
+                        screen_array[self.brick_start_x+i][temp] = alpha + \
+                            bricks[int(posn)][z] + "\033[0m"
                         temp = temp+1
 
                 temp_data_brick.append(brick_temp)
-            self.brick_data=np.array(temp_data_brick)
-                        # print(str(Back.BLACK+Fore.RED+bricks[int(splited_bricks[k])][z]+Style.RESET_ALL))
-                        # for l in range(0,len(screen_array[i+self.brick_start_x][temp-1])):
-                        #     print(screen_array[i+self.brick_start_x][temp-1][l])
+            self.brick_data = np.array(temp_data_brick)
 
-    
-
-    # def remove_brick_inscreen(self, screen_array, x, y):
-    #     """ This function is used to remove bricks that are being hit
-    #     """
-    #     pointer_1 = y
-    #     pointer_2 = y
-    #     flag = 0
-    #     if(screen_array[x][pointer_2][10] == ']'):
-    #         flag = 1
-    #     while (screen_array[x][pointer_1][10] != '['):
-    #         screen_array[x][pointer_1] = ' '
-    #         pointer_1 -= 1
-    #     screen_array[x][pointer_1] = ' '
-    #     pointer_2 += 1
-    #     if(not flag):
-    #         while (screen_array[x][pointer_2][10] != ']'):
-    #             screen_array[x][pointer_2] = ' '
-    #             pointer_2 += 1
-    #         screen_array[x][pointer_2] = ' '
-
-
-    def remove_brick_inscreen(self, screen_array, x, y):
+    def remove_brick_inscreen(self, screen_array, x, y,go_through):
         """ This function is used to remove bricks that are being hit
         """
         pnt1 = y
         f = 0
-        pnt=10 #sum of col arr
+        print(screen_array[x][pnt1][6])
+        pnt = 10  # sum of col arr
         pnt2 = pnt1
-        index=[0,0]
+        if(screen_array[x][pnt1][5]=='P'):
+            return (0,0)
+        index = [0, 0]
         while (screen_array[x][pnt1][pnt] != '['):
             # screen_array[x][pointer_1] = ' '
             pnt1 = pnt1-1
+            if(screen_array[x][pnt1]=='⬤' or screen_array[x][pnt1]==' '):
+                if(len(screen_array[x][pnt1-1])>2):
+                    screen_array[x][pnt1]=screen_array[x][pnt1+1]
+                    if(screen_array[x][pnt1-1][pnt]==']'):
+                        break
+                else:
+                    i= pnt1+1
+                    while(screen_array[x][i][pnt]!=']' or screen_array[x][i][pnt]!='['):
+                        if (screen_array[x][i][pnt]!=']'):
+                            pnt1=i-5
+                            break
+                        elif(screen_array[x][i][pnt]!=']'):
+                            pnt1=i-6
+                            break
+                        i=i+1
+                        if(len(screen_array[x][i])<2):
+                            break
+                    else:
+                        continue
+                    break
 
-        till_i=self.brick_data.shape[0]
-        for i in range(0,till_i):
-            till_j=self.brick_data[i].size
-            index[0]=i
-            for j in range(0,till_j):
-                index[1]=j
-                if((x,pnt1)==self.brick_data[i][j].retxy()):
+
+
+
+        till_i = self.brick_data.shape[0]
+        for i in range(0, till_i):
+            till_j = self.brick_data[i].size
+            index[0] = i
+            for j in range(0, till_j):
+                index[1] = j
+                if((x, pnt1) == self.brick_data[i][j].retxy()):
                     break
             else:
                 continue
             break
-        (life,btype)=self.brick_data[index[0]][index[1]].downgrade_blife()
-        k_color=self.brick_data[index[0]][index[1]].bricks_color_change(btype)
-        temp=pnt1
-        if(life==0):
-            for z in range(0,6):
-                screen_array[x][temp]=' '
-                temp=temp+1
+        (life, btype,score_) = self.brick_data[index[0]][index[1]].downgrade_blife(1,go_through)
+        k_color = self.brick_data[index[0]
+                                  ][index[1]].bricks_color_change(btype)
+        temp = pnt1
+        if(life <= 0):
+            for z in range(0, 6):
+                screen_array[x][temp] = ' '
+                temp = temp+1
         else:
-            for z in range(0,6):
-                screen_array[x][temp]=k_color+bricks[btype][z]+"\033[0m"
-                temp=temp+1
+            for z in range(0, 6):
+                screen_array[x][temp] = k_color+bricks[btype][z]+"\033[0m"
+                temp = temp+1
+        return (score_,1)

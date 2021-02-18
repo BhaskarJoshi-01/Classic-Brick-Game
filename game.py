@@ -47,7 +47,7 @@ ball=Ball(ball_starting_vx,ball_starting_vy,ball_starting_posx,ball_starting_pos
 # calling the class to update time,lives and score
 gamedata = gametop(available_time, score, livesleft)
 gamedata.update_gametop_inscreen(screen_array)
-
+sticky_ball_motion=False
 screen_board.showscreen()
 tic_toc=time.time()
 
@@ -79,6 +79,8 @@ while True:
         if (key == 'q'):
             print(Fore.YELLOW+art.you_quit_art+Style.RESET_ALL)
             break
+        if (key =='k'):
+            sticky_ball_motion=False
 
         current_time = time.time()
         available_time = available_time-current_time+start_time
@@ -87,16 +89,26 @@ while True:
             print(Fore.YELLOW+ art.timeover_art)
             break
         # ball.update_ball_inscreen(screen_array)
-        ball_return_val=ball.ball_motion(screen_array,bricks,paddle_start,paddle_end)
-        if(ball_return_val<0):
-            livesleft=livesleft-1
-            if(livesleft>0):
-                pass
-            else:
-                print(Fore.YELLOW+art.game_over_art+Style.RESET_ALL)
-                break
-            ball=Ball(-1,-1,ball_starting_posx,ball_starting_posy,screen_array)
+        if(not sticky_ball_motion):
             
+            (ball_return_val,score_is,chosen_val)=ball.ball_motion(screen_array,bricks,paddle_start,paddle_end)
+            score=score+score_is
+            score_is=0
+        
+        
+        
+        
+            if(ball_return_val<0):
+                livesleft=livesleft-1
+                print("Lives left : ",livesleft)
+                if(livesleft>0):
+                    pass
+                else:
+                    print(Fore.YELLOW+art.game_over_art+Style.RESET_ALL)
+                    break
+
+                ball=Ball(-1,-1,ball_starting_posx,ball_starting_posy,screen_array)
+                sticky_ball_motion=False
 
 
         gamedata.update_gametop(available_time, score, livesleft)
