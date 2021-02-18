@@ -7,7 +7,7 @@ from startingvalues import *
 sys_random = rnd.SystemRandom()
 brick_orientation_size = brick_orientation.size
 bricks_life = [0, 1, 2, 1000]
-
+size_of_str=6
 
 class Brick_inherit:
     def __init__(self, btype, x, y):
@@ -70,9 +70,10 @@ class Bricks:
         self.brick_data = np.array([])
         self.sys_random=rnd.SystemRandom()
         self.poweruparray=[0 for i in range(1,30)]
-        for i in range(0,6):
-            self.poweruparray[i]=6-i
-        print(self.poweruparray)
+        for i in range(0,size_of_str):
+            self.poweruparray[i]=size_of_str
+            self.poweruparray[i]-=i
+        # print(self.poweruparray)
 
     def update_bricks_inscreen(self, screen_array):
         temp = 0
@@ -115,8 +116,9 @@ class Bricks:
             # screen_array[x][pointer_1] = ' '
             pnt1 = pnt1-1
             if(screen_array[x][pnt1]=='⬤' or screen_array[x][pnt1]==' '):
-                if(len(screen_array[x][pnt1-1])>2):
-                    screen_array[x][pnt1]=screen_array[x][pnt1+1]
+                len_val=len(screen_array[x][pnt1-1])
+                if((len_val)>=3):
+                    screen_array[x][pnt1]=screen_array[x][1+pnt1]
                     if(screen_array[x][pnt1-1][pnt]==']'):
                         break
                 else:
@@ -140,25 +142,35 @@ class Bricks:
 
         till_i = self.brick_data.shape[0]
         for i in range(0, till_i):
-            till_j = self.brick_data[i].size
             index[0] = i
+            till_j = self.brick_data[i].size
             for j in range(0, till_j):
                 index[1] = j
+                fg=0
                 if((x, pnt1) == self.brick_data[i][j].retxy()):
+                    fg=1
+                if(fg):
                     break
+                else:
+                    fg=0
             else:
                 continue
             break
-        (life, btype,score_) = self.brick_data[index[0]][index[1]].downgrade_blife(1,go_through)
-        k_color = self.brick_data[index[0]
-                                  ][index[1]].bricks_color_change(btype)
-        temp = pnt1
-        if(life <= 0):
-            for z in range(0, 6):
+        pos0=index[0]
+        pos1=index[1]
+        (life, btype,score_) = self.brick_data[pos0][pos1].downgrade_blife(1,go_through)
+        k_color = self.brick_data[pos0
+                                  ][pos1].bricks_color_change(btype)
+        temp = 0
+
+        if(life < 1):
+            temp=pnt1
+            for z in range(0, size_of_str):
                 screen_array[x][temp] = ' '
                 temp = temp+1
         else:
-            for z in range(0, 6):
+            temp=pnt1
+            for z in range(0, size_of_str):
                 screen_array[x][temp] = k_color+bricks[btype][z]+"\033[0m"
                 temp = temp+1
         return (score_,1)
