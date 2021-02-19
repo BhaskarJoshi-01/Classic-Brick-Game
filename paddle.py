@@ -1,12 +1,13 @@
 from objects import *
 from colorama import Fore, Back, Style
 from startingvalues import width
+
 class paddle:
     def __init__(self,cur_X,cur_Y,cur_type):
         self.cur_X=cur_X
         self.cur_Y=cur_Y
         self.type=cur_type
-    
+        
     def updated_paddle(self,upd_X,upd_Y,upd_type):
         self.cur_X=upd_X
         self.cur_Y=upd_Y

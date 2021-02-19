@@ -3,8 +3,8 @@ import numpy as np
 from objects import * 
 height= 45
 width = 165
-brick_starting_x=15
-brick_starting_y=40
+brick_starting_x=10
+brick_starting_y=45
 ball_starting_vx=-1
 ball_starting_vy=2
 ball_starting_posx=41

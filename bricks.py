@@ -7,11 +7,11 @@ from startingvalues import *
 sys_random = rnd.SystemRandom()
 bricks_life = [0, 1, 2, 1000]
 size_of_str=6
-bricks = np.array(["[qqqq]", "[wwww]",
-                   "[eeee]", "[rrrr]"])
+bricks = np.array(["[1lef]", "[2lef]",
+                   "[3lef]", "[Xlef]"])
 
 b_1 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
-    " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1"+" "+"2&2&2&2&2&2&2&2&2&2"
+    " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1"+" "+"2&2&2&2&2&2&2&2&2&2"+" "+"3&3&3&3&3&3&3&3&3&3"
 
 bricks_color=np.array([bred,byellow,bgreen,bblue])
 bricks_font_color=np.array([fyellow,fred,fblue,fgreen])
