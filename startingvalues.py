@@ -18,4 +18,4 @@ start_time=time.time()
 
 available_time=500
 livesleft=3
-paddle_array=np.array([width//2,height-3,2])
+PA=np.array([width//2,height-3,2])

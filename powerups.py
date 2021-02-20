@@ -45,20 +45,20 @@ class power0:
         self._x=5+x
         self._y=updatedy+y
     
-    def upadate_powerup_inscreen(self,screen_array,paddle_end,paddle_start,Paddle):
+    def upadate_powerup_inscreen(self,PrintScreen,paddle_end,paddle_start,Paddle):
 
         if((self.active-1)==0):
             if(self._x<(height-3)):
                 temp=powerup_temper[self.index]
                 locn=self._x-1
-                screen_array[locn][self._y]=' '
-                screen_array[locn+1][self._y]=temp
+                PrintScreen[locn][self._y]=' '
+                PrintScreen[locn+1][self._y]=temp
             elif(self._x>(height-3)):
                 self.active=0
             else:
                 temp=powerup_temper[self.index]
                 locn=self._x-1
-                screen_array[locn][self._y]=' '
+                PrintScreen[locn][self._y]=' '
                 if((self._y-paddle_start)>=0 and (self._y-paddle_end)<=0):
                     self.active=2
                     return boolean_val[1]
@@ -96,11 +96,11 @@ class power2(power0):
         self._y=self.active+y
         self.index=2
 
-    def undo(self,ball_class,screen_array,ball_index):
+    def undo(self,ball_class,PrintScreen,ball_index):
         x=ball_class
         #remaining code
 
-    def do(self,ball_class,screen_array,ball_index):
+    def do(self,ball_class,PrintScreen,ball_index):
         x=ball_class
         
         #remaining code
@@ -108,45 +108,45 @@ class power2(power0):
 
 class power3(power0):
     def __init__(self,x,y):
-        self.active=0
+        self.active,self.index=0,3
         self.time_activated=time.time()
         self.max_time=self.active+5
         self._x=self.active+x+5
         self._y=self.active+y
-        self.index=3
+        
 
     def undo (self,ball_class):
-        ball_class.increase_speed(-2,-2)   
+        ball_class.NeedForSpeed(+2,+2)   
 
     def do (self,ball_class):
-        ball_class.increase_speed(-2,-2)            
+        ball_class.NeedForSpeed(+2,+2)            
 
 class power4(power0):
     def __init__(self,x,y):
-        self.time_activated=time.time()
+        self.index=4
         self.active=0
         self.max_time=self.active+15
         self._x=self.active+x+5
         self._y=self.active+y
-        self.index=4
+        self.time_activated=time.time()
 
     def undo (self,ball_class):
-        ball_class.update_thru_ball(boolean_val[0])
+        ball_class.UltimateFireBall(boolean_val[0])
     def do (self,ball_class):
-        ball_class.update_thru_ball(boolean_val[1])
+        ball_class.UltimateFireBall(boolean_val[1])
 
 class power5(power0):
     def __init__(self,x,y):
         self.active=0
         self.time_activated=time.time()
-        self.max_time=self.active+10
+        self.max_time=self.active+20
         self._x=self.active+x+5
         self._y=self.active+y
         self.index=5
 
     def undo (self):
-        # ball_class.increase_speed(-2,-2)            
+        # ball_class.NeedForSpeed(-2,-2)            
         return boolean_val[0]
     def do (self):
-        # ball_class.increase_speed(-2,-2)  
+        # ball_class.NeedForSpeed(-2,-2)  
         return boolean_val[1]

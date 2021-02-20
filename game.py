@@ -38,21 +38,21 @@ while True:
         pass
 os.system('clear')
 # handling screen
-screen_board = Create_Scenery(height, width)
+screen_board = Outlines(height, width)
 # print("hello2")
-screen_array = screen_board.create_scenery()
+PrintScreen = screen_board.Outlines()
 # print("hello3")
 bricks = Bricks()
 
 # handling paddle
-paddle = paddle(paddle_array[0], paddle_array[1], paddle_array[2])
-paddle.updated_paddle_inscreen(screen_array)
+paddle = paddle(PA[0], PA[1], PA[2])
+paddle.updatingPS(PrintScreen)
 # doubt
-bricks.update_bricks_inscreen(screen_array)
+bricks.UpdatingBricks(PrintScreen)
 ###################
 ball = Ball(ball_starting_vx, ball_starting_vy,
-            ball_starting_posx, ball_starting_posy, screen_array)
-# ball.update_ball_inscreen(screen_array)
+            ball_starting_posx, ball_starting_posy, PrintScreen)
+# ball.NewBallOnscreen(PrintScreen)
 # handling gamedata
 # calling the class to update time,lives and score
 
@@ -75,9 +75,9 @@ powerups.append(power5(0, 0))
 p5_added=True
 
 gamedata = gametop(available_time, score, livesleft)
-gamedata.update_gametop_inscreen(screen_array)
-sticky_ball_motion = True
-sticky_ball_powerup = False
+gamedata.update_gametop_inscreen(PrintScreen)
+SB_motion = True
+SB_powerup = False
 screen_board.showscreen()
 tic_toc = time.time()
 
@@ -87,43 +87,43 @@ while True:
     if(toc-tic_toc-0.15 >= 0):
         key = input_to()
         tic_toc = toc
-        paddle_start = paddle_array[0] - \
-            (int)((paddle_size[paddle_array[2]]+2)/2)
-        paddle_end = paddle_array[0]+1 + \
-            (int)((paddle_size[paddle_array[2]]+2)/2)
+        paddle_start = PA[0] - \
+            (int)((paddle_size[PA[2]]+2)/2)
+        paddle_end = PA[0]+1 + \
+            (int)((paddle_size[PA[2]]+2)/2)
 
         print("\033[0;0H")
         if(key == 'a' or key == 'd'):
             if (key == 'a'):
                 if((paddle_start-4) > 0):
                     # moving paddle to 3 unit left
-                    paddle_array[0] = paddle_array[0]-3
-                    if(sticky_ball_motion):
-                        ball.ball_sticky_movement(screen_array, 0, -3)
+                    PA[0] = PA[0]-3
+                    if(SB_motion):
+                        ball.SticknessofBall(PrintScreen, 0, -3)
                     paddle.updated_paddle(
-                        paddle_array[0], paddle_array[1], paddle_array[2])
+                        PA[0], PA[1], PA[2])
 
             if(key == 'd'):
                 if((paddle_end+3) < width):
                     # moving paddle to 3 unit right
-                    paddle_array[0] = paddle_array[0]+3
-                if(sticky_ball_motion):
-                    ball.ball_sticky_movement(screen_array, 0, 3)
+                    PA[0] = PA[0]+3
+                if(SB_motion):
+                    ball.SticknessofBall(PrintScreen, 0, 3)
                 paddle.updated_paddle(
-                    paddle_array[0], paddle_array[1], paddle_array[2])
+                    PA[0], PA[1], PA[2])
             # updating paddle so that it could move in one key down
-            # if(sticky_ball_motion):
-            #     ball.ball_sticky_movement(screen_array,0,-3)
-            # paddle.updated_paddle(paddle_array[0],paddle_array[1],paddle_array[2])
+            # if(SB_motion):
+            #     ball.SticknessofBall(PrintScreen,0,-3)
+            # paddle.updated_paddle(PA[0],PA[1],PA[2])
 
-            # paddle.updated_paddle(paddle_array[0],paddle_array[1],paddle_array[2])
+            # paddle.updated_paddle(PA[0],PA[1],PA[2])
 
         if (key == 'q'):
             print(Fore.YELLOW+"You Quit"+Style.RESET_ALL)
             print()
             break
         if (key == ' '):
-            sticky_ball_motion = False
+            SB_motion = False
 
         current_time = time.time()
         available_time = available_time-current_time+start_time
@@ -131,8 +131,8 @@ while True:
         if(available_time < 0):
             print(Fore.YELLOW + art.timeover_art)
             break
-        # ball.update_ball_inscreen(screen_array)
-        if(not sticky_ball_motion):
+        # ball.NewBallOnscreen(PrintScreen)
+        if(not SB_motion):
             # print("powerup_temper[0][0] ",powerup_temper[0][0])
             # print("powerup_temper[0][1] ",powerup_temper[0][1])
             # print("powerup_temper[0][2] ",powerup_temper[0][2])
@@ -141,8 +141,14 @@ while True:
             # print("powerup_temper[0][5] ",powerup_temper[0][5])
             # print("powerup_temper[0][6]",powerup_temper[0][6])
 
-            (ball_return_val, score_is, chosen_val) = ball.ball_motion(
-                screen_array, bricks, paddle_start, paddle_end)
+            alpha = ball.BallMoment(
+                PrintScreen, bricks, paddle_start, paddle_end)
+            
+            if(alpha is not None):
+                (ball_return_val, score_is, chosen_val)=alpha
+            else:
+                (ball_return_val, score_is, chosen_val)=(0,0,0)
+
             score = score+score_is
             score_is = 0
 
@@ -172,8 +178,8 @@ while True:
                     arr.append(i)
                 temp_random = rnd.choice(arr)
                 ball = Ball(-1, -1, ball_starting_posx,
-                            temp_random, screen_array)
-                sticky_ball_motion = True
+                            temp_random, PrintScreen)
+                SB_motion = True
 
         for i in range(0, various_powerups):
             # if(not powerup_flag[i]):
@@ -183,7 +189,7 @@ while True:
             #         # print("i is 1 ",i)
             #     elif((i-5) == 0):
             #         # print("i is 2 ",i)
-            #         sticky_ball_powerup = powerups[i].undo()
+            #         SB_powerup = powerups[i].undo()
             #     elif(i-4 == 0):
             #         # print("i is 3 ",i)
             #         powerups[i].undo(ball)
@@ -199,14 +205,14 @@ while True:
                 if(powerups[i].ret_status() == 1):
 
                     ret_value = powerups[i].upadate_powerup_inscreen(
-                        screen_array, paddle_end, paddle_start, paddle)
+                        PrintScreen, paddle_end, paddle_start, paddle)
                     if(ret_value == boolean_val[1]):
                         if((i-1) == 0 or (i == 0)):
                             powerups[i].do(paddle)
                         elif((i-3) == 0 or (i-4) == 0):
                             powerups[i].do(ball)
                         elif((i-5) == 0):
-                            sticky_ball_powerup = powerups[i].do()
+                            SB_powerup = powerups[i].do()
 
                     if(powerups[i].ret_status() == 0):
                         powerup_flag[i] = 0
@@ -221,11 +227,11 @@ while True:
                         elif((i-3) == 0 or (i-4) == 0):
                             powerups[i].undo(ball)
                         elif((i-5) == 0):
-                            sticky_ball_powerup = powerups[i].undo()
+                            SB_powerup = powerups[i].undo()
 
         gamedata.update_gametop(available_time, score, livesleft)
-        gamedata.update_gametop_inscreen(screen_array)
-        paddle.updated_paddle_inscreen(screen_array)
+        gamedata.update_gametop_inscreen(PrintScreen)
+        paddle.updatingPS(PrintScreen)
         # print(Style.RESET_ALL)
         screen_board.showscreen()
         # print("powerup_temper[0][0] ",powerup_temper[0][0])
@@ -235,11 +241,11 @@ while True:
         # print("powerup_temper[0][4] ",powerup_temper[0][4])
         # print("powerup_temper[0][5] ",powerup_temper[0][5])
         # print("powerup_temper[0][6]",powerup_temper[0][6])
-        if(sticky_ball_powerup):
+        if(SB_powerup):
             (bavx, bavy, bax, bay) = ball.ret_class_inti()
             if(bax >= (height-3)):
                 if((bay-paddle_start) >= 0 and (bay-paddle_end) <= 0):
-                    self.sticky_ball_motion = boolean_val[1]
+                    self.SB_motion = boolean_val[1]
 
 
 fd = sys.stdin.fileno()

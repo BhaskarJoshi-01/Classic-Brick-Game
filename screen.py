@@ -19,8 +19,8 @@ class screen:
             print()
 
 
-class Create_Scenery(screen):
-    def create_scenery(self): #boder of game
+class Outlines(screen):
+    def Outlines(self): #boder of game
         till_i=self.height
         till_j=self.width
         for i in range(0,till_i):

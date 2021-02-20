@@ -21,7 +21,7 @@ class paddle:
 
     
     
-    def updated_paddle_inscreen(self,screen_array):
+    def updatingPS(self,PrintScreen):
         # paddle_val=paddle_size[self.type]
         paddle= '$'
         for i in range(0,paddle_size[self.type]):
@@ -37,14 +37,14 @@ class paddle:
         end_val = 2+end if end-width+6>0 else 3+end
 
         for i in range(start_val,end_val):
-            if(screen_array[self.cur_Y][i]!='⬤' or screen_array[self.cur_Y][i]!='|'):
-                screen_array[self.cur_Y][i]=' '
+            if(PrintScreen[self.cur_Y][i]!='⬤' or PrintScreen[self.cur_Y][i]!='|'):
+                PrintScreen[self.cur_Y][i]=' '
         
 
         # for i in range(start,end):
-        #     screen_array[self.cur_Y][i]=' '
+        #     PrintScreen[self.cur_Y][i]=' '
         # putting paddle where it has to be
         for i in range(start,end):
-            screen_array[self.cur_Y][i]=paddle[j]
+            PrintScreen[self.cur_Y][i]=paddle[j]
             j=j+1
-        screen_array[self.cur_Y][0]='@'
+        PrintScreen[self.cur_Y][0]='@'

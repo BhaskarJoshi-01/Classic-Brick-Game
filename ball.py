@@ -7,38 +7,38 @@ diff_flag=[-2,-1,0,1,2]
 
 
 class Ball:
-    def __init__(self, vx, vy, x, y, screen_array):
+    def __init__(self, vx, vy, x, y, PrintScreen):
         self._x = x
         self._y = y
         # file=open("1.txt","a")
-        # print(screen_array.shape,self._x,self._y)
+        # print(PrintScreen.shape,self._x,self._y)
         # file.close()
-        if(screen_array[self._x][self._y] == ' '):
-            screen_array[self._x][self._y] = '⬤'
+        if(PrintScreen[self._x][self._y] == ' '):
+            PrintScreen[self._x][self._y] = '⬤'
         self.vx = vx
         self.vy = vy
         self._thru_ball=boolean_val[0]
-        self.sticky_ball=boolean_val[0]
+        self.SB=boolean_val[0]
         # self.sticky_at_start=boolean_val[1]
 
-    def update_ball_inscreen(self, screen_array):
-        if(screen_array[self._x][self._y] == ' '):
-            screen_array[self._x][self._y] = '⬤'
+    def NewBallOnscreen(self, PrintScreen):
+        if(PrintScreen[self._x][self._y] == ' '):
+            PrintScreen[self._x][self._y] = '⬤'
 
 
     
 
-    def ball_sticky_movement(self,screen_array,x,y):
-        screen_array[self._x][self._y]=' '
+    def SticknessofBall(self,PrintScreen,x,y):
+        PrintScreen[self._x][self._y]=' '
         self._x=x+self._x
         self._y=y+self._y
-        screen_array[self._x][self._y]='⬤'
+        PrintScreen[self._x][self._y]='⬤'
 
     def update_speed(self,x,y):
         self.vx=y+updatedy
         self.vy=x+updatedx
 
-    def update_thru_ball(self,value):
+    def UltimateFireBall(self,value):
         self._thru_ball=value
 
     def update_xandy(self,x,y):
@@ -46,14 +46,14 @@ class Ball:
         # print("here")
         self._x=(x+updatedx)
     
-    def increase_speed(self,x,y):
+    def NeedForSpeed(self,x,y):
         self.vx=abs(x)*self.vx
         self.vy=abs(y)*self.vy
 
     def ret_class_inti(self):
         return (self.vx,self.vy,self._x,self._y)
 
-    def ball_motion(self, screen_array, cbrick, paddle_start, paddle_end):
+    def BallMoment(self, PrintScreen, cbrick, paddle_start, paddle_end):
         previous_x = self._x
         tmpx = self._x+self.vx
         previous_y = self._y
@@ -86,15 +86,15 @@ class Ball:
                     self.vx = -1*self.vx
                     return (diff_flag[3],score_is,chosen_val)
                 else:
-                    screen_array[previous_x][previous_y] = ' '
+                    PrintScreen[previous_x][previous_y] = ' '
                     return (diff_flag[0],score_is,chosen_val)
             if((height-3)!=tmpx and self._x>(height-3)):
-                screen_array[previous_x][previous_y] = ' '
+                PrintScreen[previous_x][previous_y] = ' '
                 return (diff_flag[0],score_is,chosen_val)
         else:
-            array = [bricks_font_color[i]+bricks_color[i]+bricks[i]
+            array = [FCofBricks[i]+ShadesOfBricks[i]+bricks[i]
                      [1]+"\033[0m" for i in range(0, bricks.size)]
-            screen_array[previous_x][previous_y] = ' '
+            PrintScreen[previous_x][previous_y] = ' '
 
             if((tmpx-5) <= 0):
                 self.vx = -1*self.vx
@@ -133,7 +133,7 @@ class Ball:
                     for i in range(1,till_i):
                         g1=ball_temp[i][0]
                         g2=ball_temp[i][1]
-                        if(screen_array[ball_temp[i][0]][ball_temp[i][1]]!=' '):
+                        if(PrintScreen[ball_temp[i][0]][ball_temp[i][1]]!=' '):
                             
                             if((1+cur_x,1+cur_y)==(g1,g2) or 
                                 (cur_x-1,cur_y-1)==(g1,g2) or 
@@ -147,7 +147,7 @@ class Ball:
                             elif((cur_x+1,cur_y)==(g1,g2) or
                                 (cur_x-1,cur_y)==(g1,g2)):
                                 self.vx=-1*self.vx
-                            (score_is,chosen_val)= cbrick.remove_brick_inscreen(screen_array,g1,g2,False)
+                            (score_is,chosen_val)= cbrick.BricksRemoval(PrintScreen,g1,g2,False)
                             tmpx=cur_x
                             tmpy=cur_y
                             break
@@ -159,29 +159,29 @@ class Ball:
                     for i in range(1,till_i):
                         g1=ball_temp[i][0]
                         g2=ball_temp[i][1]
-                        if(screen_array[g1][g2]!= '⬤' or
-                            screen_array[g1][g2]!= '@' or 
-                            screen_array[g1][g2] != '$' or 
-                            screen_array[g1][g2] != '#' or 
-                            screen_array[g1][g2] != '=' or 
-                            screen_array[g1][g2] != '>' or 
-                            screen_array[g1][g2] != '<'):
-                            if(screen_array[g1][g2]!=' '):
-                                (score_,choosen_value) = cbrick.remove_brick_inscreen(screen_array,g1,g2,boolean_val[1])
+                        if(PrintScreen[g1][g2]!= '⬤' or
+                            PrintScreen[g1][g2]!= '@' or 
+                            PrintScreen[g1][g2] != '$' or 
+                            PrintScreen[g1][g2] != '#' or 
+                            PrintScreen[g1][g2] != '=' or 
+                            PrintScreen[g1][g2] != '>' or 
+                            PrintScreen[g1][g2] != '<'):
+                            if(PrintScreen[g1][g2]!=' '):
+                                (score_,choosen_value) = cbrick.BricksRemoval(PrintScreen,g1,g2,boolean_val[1])
 
             # if(self._thru_ball):
             #     # self._x=tmpx
             #     # self._y=tmpy
             #     pass
-            if(screen_array[tmpx][tmpy]==' ' and not self._thru_ball):
-                screen_array[tmpx][tmpy]='⬤'
+            if(PrintScreen[tmpx][tmpy]==' ' and not self._thru_ball):
+                PrintScreen[tmpx][tmpy]='⬤'
                 self._x=tmpx
                 self._y=tmpy
                 return (diff_flag[3],score_is,chosen_val)
             elif(self._thru_ball):
                 self._x=tmpx
                 self._y=tmpy
-                screen_array[tmpx][tmpy]='⬤'
+                PrintScreen[tmpx][tmpy]='⬤'
                 return (diff_flag[3],score_is,chosen_val)
 
                     
