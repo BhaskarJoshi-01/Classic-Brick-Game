@@ -133,6 +133,13 @@ while True:
             break
         # ball.update_ball_inscreen(screen_array)
         if(not sticky_ball_motion):
+            # print("powerup_temper[0][0] ",powerup_temper[0][0])
+            # print("powerup_temper[0][1] ",powerup_temper[0][1])
+            # print("powerup_temper[0][2] ",powerup_temper[0][2])
+            # print("powerup_temper[0][3] ",powerup_temper[0][3])
+            # print("powerup_temper[0][4] ",powerup_temper[0][4])
+            # print("powerup_temper[0][5] ",powerup_temper[0][5])
+            # print("powerup_temper[0][6]",powerup_temper[0][6])
 
             (ball_return_val, score_is, chosen_val) = ball.ball_motion(
                 screen_array, bricks, paddle_start, paddle_end)
@@ -144,6 +151,7 @@ while True:
                 if(powerup_flag[i]-1 == 0):
                     tempo = tempo+1
             if(chosen_val != 0 and tempo < 3):
+                print(chosen_val)
                 if(powerup_flag[chosen_val-1]-1 != 0):
                     powerup_flag[chosen_val-1] = 1
                 else:
@@ -168,19 +176,20 @@ while True:
                 sticky_ball_motion = True
 
         for i in range(0, various_powerups):
-            if(not powerup_flag[i]):
-                powerups[i].update_status(0)
-                if((i-1) == 0 or i == 0):
-                    powerups[i].undo(paddle)
-                    # print("i is 1 ",i)
-                elif((i-5) == 0):
-                    # print("i is 2 ",i)
-                    sticky_ball_powerup = powerups[i].undo()
-                elif(i-4 == 0):
-                    # print("i is 3 ",i)
-                    powerups[i].undo(ball)
+            # if(not powerup_flag[i]):
+            #     powerups[i].update_status(0)
+            #     if((i-1) == 0 or i == 0):
+            #         powerups[i].undo(paddle)
+            #         # print("i is 1 ",i)
+            #     elif((i-5) == 0):
+            #         # print("i is 2 ",i)
+            #         sticky_ball_powerup = powerups[i].undo()
+            #     elif(i-4 == 0):
+            #         # print("i is 3 ",i)
+            #         powerups[i].undo(ball)
 
-            else:
+            # else:
+            if(powerup_flag[i]):
                 if(powerups[i].ret_status() == 0):
 
                     (bavx, bavy, bax, bay) = ball.ret_class_inti()
@@ -188,6 +197,7 @@ while True:
                     powerups[i].make_power_active()
 
                 if(powerups[i].ret_status() == 1):
+
                     ret_value = powerups[i].upadate_powerup_inscreen(
                         screen_array, paddle_end, paddle_start, paddle)
                     if(ret_value == boolean_val[1]):
@@ -218,7 +228,13 @@ while True:
         paddle.updated_paddle_inscreen(screen_array)
         # print(Style.RESET_ALL)
         screen_board.showscreen()
-
+        # print("powerup_temper[0][0] ",powerup_temper[0][0])
+        # print("powerup_temper[0][1] ",powerup_temper[0][1])
+        # print("powerup_temper[0][2] ",powerup_temper[0][2])
+        # print("powerup_temper[0][3] ",powerup_temper[0][3])
+        # print("powerup_temper[0][4] ",powerup_temper[0][4])
+        # print("powerup_temper[0][5] ",powerup_temper[0][5])
+        # print("powerup_temper[0][6]",powerup_temper[0][6])
         if(sticky_ball_powerup):
             (bavx, bavy, bax, bay) = ball.ret_class_inti()
             if(bax >= (height-3)):

@@ -3,6 +3,7 @@ from objects import *
 import random as rnd
 from colorama import Fore, Back, Style
 from startingvalues import *
+# powerup_temper=[fred+"1"+"\033[0m",fgreen+"2"+"\033[0m",fyellow+"3"+"\033[0m",fred+"4"+"\033[0m",fgreen+"5"+"\033[0m",fyellow+"6"+"\033[0m"]
 
 # sys_random = rnd.SystemRandom()
 # rnd.seed(10)
@@ -96,11 +97,11 @@ class Bricks:
         self.brick_data = np.array([])
         arr=[]
         for i in range(1,30):
-            arr.append(i)
+            arr.append(0)
         self.poweruparray = arr
         for i in range(0, size_of_str):
-            self.poweruparray[i] = size_of_str
-            self.poweruparray[i] -= i
+            self.poweruparray[i] = size_of_str-i
+            # self.poweruparray[i] -= i
 
     def update_bricks_inscreen(self, screen_array):
         temp = 0
@@ -135,7 +136,18 @@ class Bricks:
         f = 0
         pnt = 10  # sum of col arr
         pnt2 = pnt1
-        if(screen_array[x][pnt1][5] == 'P'):
+        # print(powerup_temper)
+        if(screen_array[x][pnt1][5] == '1'):
+            return (0, 0)
+        if(screen_array[x][pnt1][5] == '2'):
+            return (0, 0)
+        if(screen_array[x][pnt1][5] == '3'):
+            return (0, 0)
+        if(screen_array[x][pnt1][5] == '4'):
+            return (0, 0)
+        if(screen_array[x][pnt1][5] == '5'):
+            return (0, 0)
+        if(screen_array[x][pnt1][5] == '6'):
             return (0, 0)
         index = [0, 0]
         while (screen_array[x][pnt1][pnt] != '['):
@@ -198,5 +210,5 @@ class Bricks:
                 screen_array[x][temp] = k_color+bricks[btype][z]+"\033[0m"
                 temp = temp+1
         powerup_randomval = self.sys_random.choice(self.poweruparray)
-        powerup_randomval=2
+        # powerup_randomval=
         return (score_, powerup_randomval)
