@@ -64,16 +64,23 @@ class Ball:
         chosen_val=0
         if(tmpx >= (height-3)):
             if((height-3) == tmpx or self._x<=(height-3)):
-                if((tmpy-paddle_end) <= 0 and (tmpy-paddle_start) >= 0):
-                    div = math.floor((paddle_end-paddle_start)/3)
-                    arr = [div+paddle_start, paddle_end-div]
+                paddle_center=(paddle_end+paddle_start)/2
 
-                    if((arr[0]-tmpy) > 0):
-                        self.vy = self.vy-1
-                    elif((arr[1]-tmpy) < 0):
-                        self.vy = self.vy+1
-                    # else:
-                    #     pass
+                # if((tmpy-paddle_end) <= 0 and (tmpy-paddle_start) >= 0):
+                    # div = math.floor((paddle_end-paddle_start)/3)
+                    # arr = [div+paddle_start, paddle_end-div]
+                    
+
+
+                    # if((arr[0]-tmpy) > 0):
+                    #     self.vy = self.vy-1
+                    # elif((arr[1]-tmpy) < 0):
+                    #     self.vy = self.vy+1
+                if((tmpy-paddle_start)>=0 and (tmpy-paddle_end)<= 0):
+                    if((tmpy-paddle_center)>0):
+                        self.vy=self.vy+math.ceil(abs(paddle_center-tmpy))
+                    if((tmpy-paddle_center)<=0):
+                        self.vy=self.vy-math.ceil(abs(paddle_center-tmpy))
                     tmpy = previous_y
                     tmpx = previous_x
                     self.vx = -1*self.vx

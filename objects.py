@@ -2,7 +2,7 @@ import numpy as np
 from colorama import Fore, Back, Style
 import math
 
-paddle_size = np.array([5, 9, 13])
+paddle_size = np.array([5, 9, 13,17])
 
 fred = "\033[31m"
 fgreen = "\033[32m"
