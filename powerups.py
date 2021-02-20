@@ -139,7 +139,7 @@ class power5(power0):
     def __init__(self,x,y):
         self.active=0
         self.time_activated=time.time()
-        self.max_time=self.active+15
+        self.max_time=self.active+10
         self._x=self.active+x+5
         self._y=self.active+y
         self.index=5

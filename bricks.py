@@ -210,5 +210,5 @@ class Bricks:
                 screen_array[x][temp] = k_color+bricks[btype][z]+"\033[0m"
                 temp = temp+1
         powerup_randomval = self.sys_random.choice(self.poweruparray)
-        # powerup_randomval=
+        # powerup_randomval=6
         return (score_, powerup_randomval)
