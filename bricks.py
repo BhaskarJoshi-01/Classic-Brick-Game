@@ -4,18 +4,24 @@ import random as rnd
 from colorama import Fore, Back, Style
 from startingvalues import *
 
-sys_random = rnd.SystemRandom()
+# sys_random = rnd.SystemRandom()
 bricks_life = [0, 1, 2, 1000]
-size_of_str=6
+size_of_str = 6
 bricks = np.array(["[1lef]", "[2lef]",
                    "[3lef]", "[Xlef]"])
 
+bricks_color = np.array([bred, byellow, bgreen, bblue])
 b_1 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
-    " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1"+" "+"2&2&2&2&2&2&2&2&2&2"+" "+"3&3&3&3&3&3&3&3&3&3"
+    " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
+        " "+"2&2&2&2&2&2&2&2&2&2"+" "+"3&3&3&3&3&3&3&3&3&3"
 
-bricks_color=np.array([bred,byellow,bgreen,bblue])
-bricks_font_color=np.array([fyellow,fred,fblue,fgreen])
-brick_orientation = np.array([b_1])
+b_2 = "1&1&1" + \
+    " "+"0&0&0"+" " + "0&0&0"+" "+"1&1&1"+" "+"1&1&1"
+b_3 = "1&1&1&1&1&1&1" + \
+    " "+"0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"
+
+bricks_font_color = np.array([fyellow, fred, fblue, fgreen])
+brick_orientation = np.array([b_1, b_2, b_3])
 brick_orientation_size = brick_orientation.size
 
 
@@ -27,16 +33,16 @@ class Brick_inherit:
         self.startingx = x
         self.startingy = y
 
-    def downgrade_blife(self,value,go_through):
+    def downgrade_blife(self, value, go_through):
 
-        score=0
-        score=self.update_score(go_through)+score
+        score = 0
+        score = self.update_score(go_through)+score
         if(go_through):
-            self.life=0
-            self.type=self.life-1
-        elif(self.type!=3):
-            self.life=bricks_life[self.type]
-            self.type=self.type-1
+            self.life = 0
+            self.type = self.life-1
+        elif(self.type != 3):
+            self.life = bricks_life[self.type]
+            self.type = self.type-1
 
         # if(self.type == 3):
         #     pass
@@ -44,8 +50,8 @@ class Brick_inherit:
         #     self.life = bricks_life[self.type]
         #     self.type = self.type-1
 
-            return (self.life, self.type,score)
-        return(self.life,self.type,score)
+            return (self.life, self.type, score)
+        return(self.life, self.type, score)
 
     def bricks_color_change(self, btype):
         self.color = bricks_color[btype]+bricks_font_color[btype]
@@ -54,36 +60,32 @@ class Brick_inherit:
     def retxy(self):
         return (self.startingx, self.startingy)
 
-    def update_score(self,go_through):
-        score=0
+    def update_score(self, go_through):
+        score = 0
         if(not go_through):
-            score= score+50
+            score = score+50
         else:
-            if(self.type==2):
-                score=score+150
-            elif(self.type==1):
-                score=score+100
-            elif(self.type==0):
-                score=score+50
+            if(self.type == 2):
+                score = score+150
+            elif(self.type == 1):
+                score = score+100
+            elif(self.type == 0):
+                score = score+50
             else:
-                score=score+200
+                score = score+200
         return score
-            
 
 
 class Bricks:
     def __init__(self):
         self.brick_start_x = brick_starting_x
-        self.brick_type = brick_orientation[sys_random.randint(
-            0, ((brick_orientation_size)-1))].split()
+        self.brick_type = brick_orientation[rnd.randint(0, ((brick_orientation_size)-1))].split()
         self.brick_start_y = brick_starting_y
         self.brick_data = np.array([])
-        self.sys_random=rnd.SystemRandom()
-        self.poweruparray=[0 for i in range(1,30)]
-        for i in range(0,size_of_str):
-            self.poweruparray[i]=size_of_str
-            self.poweruparray[i]-=i
-        # print(self.poweruparray)
+        self.poweruparray = [0 for i in range(1, 30)]
+        for i in range(0, size_of_str):
+            self.poweruparray[i] = size_of_str
+            self.poweruparray[i] -= i
 
     def update_bricks_inscreen(self, screen_array):
         temp = 0
@@ -111,44 +113,40 @@ class Bricks:
                 temp_data_brick.append(brick_temp)
             self.brick_data = np.array(temp_data_brick)
 
-    def remove_brick_inscreen(self, screen_array, x, y,go_through):
+    def remove_brick_inscreen(self, screen_array, x, y, go_through):
         """ This function is used to remove bricks that are being hit
         """
         pnt1 = y
         f = 0
-        print(screen_array[x][pnt1][6])
         pnt = 10  # sum of col arr
         pnt2 = pnt1
-        if(screen_array[x][pnt1][5]=='P'):
-            return (0,0)
+        if(screen_array[x][pnt1][5] == 'P'):
+            return (0, 0)
         index = [0, 0]
         while (screen_array[x][pnt1][pnt] != '['):
             # screen_array[x][pointer_1] = ' '
             pnt1 = pnt1-1
-            if(screen_array[x][pnt1]=='⬤' or screen_array[x][pnt1]==' '):
-                len_val=len(screen_array[x][pnt1-1])
-                if((len_val)>=3):
-                    screen_array[x][pnt1]=screen_array[x][1+pnt1]
-                    if(screen_array[x][pnt1-1][pnt]==']'):
+            if(screen_array[x][pnt1] == '⬤' or screen_array[x][pnt1] == ' '):
+                len_val = len(screen_array[x][pnt1-1])
+                if((len_val) >= 3):
+                    screen_array[x][pnt1] = screen_array[x][1+pnt1]
+                    if(screen_array[x][pnt1-1][pnt] == ']'):
                         break
                 else:
-                    i= pnt1+1
-                    while(screen_array[x][i][pnt]!=']' or screen_array[x][i][pnt]!='['):
-                        if (screen_array[x][i][pnt]!=']'):
-                            pnt1=i-5
+                    i = pnt1+1
+                    while(screen_array[x][i][pnt] != ']' or screen_array[x][i][pnt] != '['):
+                        if (screen_array[x][i][pnt] != ']'):
+                            pnt1 = i-5
                             break
-                        elif(screen_array[x][i][pnt]!=']'):
-                            pnt1=i-6
+                        elif(screen_array[x][i][pnt] != ']'):
+                            pnt1 = i-6
                             break
-                        i=i+1
-                        if(len(screen_array[x][i])<2):
+                        i = i+1
+                        if(len(screen_array[x][i]) < 2):
                             break
                     else:
                         continue
                     break
-
-
-
 
         till_i = self.brick_data.shape[0]
         for i in range(0, till_i):
@@ -156,31 +154,33 @@ class Bricks:
             till_j = self.brick_data[i].size
             for j in range(0, till_j):
                 index[1] = j
-                fg=0
+                fg = 0
                 if((x, pnt1) == self.brick_data[i][j].retxy()):
-                    fg=1
+                    fg = 1
                 if(fg):
                     break
                 else:
-                    fg=0
+                    fg = 0
             else:
                 continue
             break
-        pos0=index[0]
-        pos1=index[1]
-        (life, btype,score_) = self.brick_data[pos0][pos1].downgrade_blife(1,go_through)
+        pos0 = index[0]
+        pos1 = index[1]
+        (life, btype, score_) = self.brick_data[pos0][pos1].downgrade_blife(
+            1, go_through)
         k_color = self.brick_data[pos0
                                   ][pos1].bricks_color_change(btype)
         temp = 0
 
         if(life < 1):
-            temp=pnt1
+            temp = pnt1
             for z in range(0, size_of_str):
                 screen_array[x][temp] = ' '
                 temp = temp+1
         else:
-            temp=pnt1
+            temp = pnt1
             for z in range(0, size_of_str):
                 screen_array[x][temp] = k_color+bricks[btype][z]+"\033[0m"
                 temp = temp+1
-        return (score_,1)
+        powerup_randomval = rnd.choice(self.poweruparray)
+        return (score_, powerup_randomval)

@@ -5,13 +5,21 @@ from startingvalues import width
 class paddle:
     def __init__(self,cur_X,cur_Y,cur_type):
         self.cur_X=cur_X
-        self.cur_Y=cur_Y
+        self.free_ball=boolean_val[0]
         self.type=cur_type
+        self.cur_Y=cur_Y
+        self.Stick_powerup=boolean_val[0]
+        self.incr_dec_paddle=0
         
     def updated_paddle(self,upd_X,upd_Y,upd_type):
         self.cur_X=upd_X
         self.cur_Y=upd_Y
         self.type=upd_type
+    
+    def update_type(self,changed_type):
+        self.type=changed_type
+
+    
     
     def updated_paddle_inscreen(self,screen_array):
         # paddle_val=paddle_size[self.type]

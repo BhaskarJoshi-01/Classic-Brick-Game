@@ -10,6 +10,7 @@ class screen:
     
     
     def showscreen(self):
+        print("\x1b[{}A".format(height + 1))
         till_i=self.height
         till_j=self.width
         for i in range(0,till_i):

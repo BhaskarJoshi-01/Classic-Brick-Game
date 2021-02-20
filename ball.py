@@ -10,13 +10,16 @@ class Ball:
     def __init__(self, vx, vy, x, y, screen_array):
         self._x = x
         self._y = y
+        # file=open("1.txt","a")
+        # print(screen_array.shape,self._x,self._y)
+        # file.close()
         if(screen_array[self._x][self._y] == ' '):
             screen_array[self._x][self._y] = '⬤'
         self.vx = vx
         self.vy = vy
         self._thru_ball=boolean_val[0]
         self.sticky_ball=boolean_val[0]
-        self.sticky_at_start=boolean_val[1]
+        # self.sticky_at_start=boolean_val[1]
 
     def update_ball_inscreen(self, screen_array):
         if(screen_array[self._x][self._y] == ' '):
@@ -35,11 +38,17 @@ class Ball:
         self.vx=y+updatedy
         self.vy=x+updatedx
 
+    def update_thru_ball(self,value):
+        self._thru_ball=value
 
     def update_xandy(self,x,y):
         self._y=(y)+updatedy
         # print("here")
         self._x=(x+updatedx)
+    
+    def increase_speed(self,x,y):
+        self.vx=abs(x)*vx
+        self.vy=abs(y)*vy
 
     def ret_class_inti(self):
         return (self.vx,self.vy,self._x,self._y)
@@ -90,7 +99,6 @@ class Ball:
                     tmpy = 2+temp_val
                 elif((tmpy+2) >= width):
                     self.vy = -1*self.vy
-                    # temp_val = width-2-tmpy
                     tmpy = 2*width-4-tmpy
                 self._y = tmpy
                 self._x = tmpx
@@ -152,12 +160,12 @@ class Ball:
                             screen_array[g1][g2] != '>' or 
                             screen_array[g1][g2] != '<'):
                             if(screen_array[g1][g2]!=' '):
-                                (score_,choosen_value) = bricks_class.remove_brick_onscreen(screen_array,g1,g2,boolean_val[1])
+                                (score_,choosen_value) = cbrick.remove_brick_inscreen(screen_array,g1,g2,boolean_val[1])
 
-            if(self._thru_ball):
-                # self._x=tmpx
-                # self._y=tmpy
-                pass
+            # if(self._thru_ball):
+            #     # self._x=tmpx
+            #     # self._y=tmpy
+            #     pass
             if(screen_array[tmpx][tmpy]==' ' and not self._thru_ball):
                 screen_array[tmpx][tmpy]='⬤'
                 self._x=tmpx

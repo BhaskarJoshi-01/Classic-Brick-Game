@@ -11,6 +11,7 @@ class Get:
         """Defining __call__."""
         fd = sys.stdin.fileno()
         old_settings = termios.tcgetattr(fd)
+        old_settings[3] = old_settings[3] & ~termios.ECHO
         try:
             tty.setraw(sys.stdin.fileno())
             ch = sys.stdin.read(1)
