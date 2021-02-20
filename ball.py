@@ -47,8 +47,8 @@ class Ball:
         self._x=(x+updatedx)
     
     def increase_speed(self,x,y):
-        self.vx=abs(x)*vx
-        self.vy=abs(y)*vy
+        self.vx=abs(x)*self.vx
+        self.vy=abs(y)*self.vy
 
     def ret_class_inti(self):
         return (self.vx,self.vy,self._x,self._y)

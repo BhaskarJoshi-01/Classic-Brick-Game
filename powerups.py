@@ -105,8 +105,8 @@ class power2(power0):
 
 class power3(power0):
     def __init__(self,x,y):
-        self.time_activated=time.time()
         self.active=0
+        self.time_activated=time.time()
         self.max_time=self.active+5
         self._x=self.active+x+5
         self._y=self.active+y
@@ -121,7 +121,7 @@ class power4(power0):
     def __init__(self,x,y):
         self.time_activated=time.time()
         self.active=0
-        self.max_time=self.active+5
+        self.max_time=self.active+15
         self._x=self.active+x+5
         self._y=self.active+y
 
@@ -134,7 +134,7 @@ class power5(power0):
     def __init__(self,x,y):
         self.active=0
         self.time_activated=time.time()
-        self.max_time=self.active+5
+        self.max_time=self.active+15
         self._x=self.active+x+5
         self._y=self.active+y
 

@@ -1,19 +1,9 @@
-from art import *
 import numpy as np
 from colorama import Fore, Back, Style
 import math
-# ball_graphic = "0"
-
-# bricks = np.array(["[qqqq]", "[wwww]",
-#                    "[eeee]", "[rrrr]"])
 
 paddle_size = np.array([5, 9, 13])
 
-# brick pattern
-# b_1 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
-#     " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1"+" "+"2&2&2&2&2&2&2&2&2&2"
-
-# brick pattern
 fred = "\033[31m"
 fgreen = "\033[32m"
 fyellow = "\033[33m"
@@ -26,17 +16,22 @@ bblue = "\033[44m"
 
 boolean_val=[False,True]
 
-# bricks_color=np.array([bred,byellow,bgreen,bblue])
-# bricks_font_color=np.array([fyellow,fred,fblue,fgreen])
-# brick_orientation = np.array([b_1])
-instructions = print(Fore.YELLOW+art.instructions_art)
+instructions = print(Fore.YELLOW+"Insrtuctions"+Back.WHITE)
+print()
+print()
 print(Back.GREEN+'Press g to start game')
+print()
+print()
 print(Fore.RED+'Press q to quit game')
 print()
 print()
 print(Fore.BLUE+'Press a to move board left')
 print()
 print()
+print(Fore.RED+'Press SpaceBar to launch Ball')
+print()
+print()
+
 print(Fore.BLUE+'Press d to move board right')
 print(Style.RESET_ALL)
 

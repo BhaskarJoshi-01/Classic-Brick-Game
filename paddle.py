@@ -10,11 +10,11 @@ class paddle:
         self.cur_Y=cur_Y
         self.Stick_powerup=boolean_val[0]
         self.incr_dec_paddle=0
-        
+    
+
     def updated_paddle(self,upd_X,upd_Y,upd_type):
-        self.cur_X=upd_X
-        self.cur_Y=upd_Y
-        self.type=upd_type
+        self.cur_X,self.cur_Y,self.type=upd_X,upd_Y,upd_type
+        
     
     def update_type(self,changed_type):
         self.type=changed_type

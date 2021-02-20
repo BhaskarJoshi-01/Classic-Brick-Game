@@ -28,7 +28,8 @@ while True:
     key_pressed = input_to()
     # print(key_pressed)
     if (key_pressed == 'q'):
-        print(Fore.YELLOW+art.you_quit_art+Style.RESET_ALL)
+        print(Fore.YELLOW+"You Quit"+Style.RESET_ALL)
+        print()
         exit()
     elif (key_pressed == 'g'):
 
@@ -118,9 +119,10 @@ while True:
             # paddle.updated_paddle(paddle_array[0],paddle_array[1],paddle_array[2])
 
         if (key == 'q'):
-            print(Fore.YELLOW+art.you_quit_art+Style.RESET_ALL)
+            print(Fore.YELLOW+"You Quit"+Style.RESET_ALL)
+            print()
             break
-        if (key == 'k'):
+        if (key == ' '):
             sticky_ball_motion = False
 
         current_time = time.time()
@@ -153,7 +155,8 @@ while True:
                 if(livesleft > 0):
                     pass
                 else:
-                    print(Fore.YELLOW+art.game_over_art+Style.RESET_ALL)
+                    print(Fore.YELLOW+"Game Over"+Style.RESET_ALL)
+                    print()
                     break
                 # arr=[i  for i in range(paddle_start,paddle_end) ]
                 arr = []
@@ -234,5 +237,3 @@ termios.tcsetattr(fd, termios.TCSADRAIN, settings)
         
 #     def startgame(self):
 #         return self.game
-
-# gamefunction()

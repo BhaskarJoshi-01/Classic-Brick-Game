@@ -4,10 +4,8 @@ import numpy as np
 
 class gametop:
     def __init__(self, timeleft, score, lives_rem):
-        self.timeleft = timeleft
-        self.livesleft = lives_rem
-        self.score = score
-
+        self.timeleft,self.livesleft,self.score = timeleft,lives_rem,score
+        
     def update_gametop_inscreen(self, screen_array):
         value = np.array([Fore.RED+Back.GREEN+ "\t GAME INFO \t "+"\nYour Score is : "+str(self.score)+"\nLives Remaining : " +
                           str(self.livesleft)+"\nTime Remaining is : "+str(self.timeleft)+Style.RESET_ALL])

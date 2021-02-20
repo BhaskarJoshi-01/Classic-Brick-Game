@@ -5,23 +5,34 @@ from colorama import Fore, Back, Style
 from startingvalues import *
 
 # sys_random = rnd.SystemRandom()
+# rnd.seed(10)
 bricks_life = [0, 1, 2, 1000]
 size_of_str = 6
 bricks = np.array(["[1lef]", "[2lef]",
                    "[3lef]", "[Xlef]"])
 
 bricks_color = np.array([bred, byellow, bgreen, bblue])
-b_1 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
-    " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
-        " "+"2&2&2&2&2&2&2&2&2&2"+" "+"3&3&3&3&3&3&3&3&3&3"
+# b_1 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
+#     " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
+#         " "+"2&2&2&2&2&2&2&2&2&2"+" "+"0&0&0&0&10&0&0&0&0"
 
-b_2 = "1&1&1" + \
-    " "+"0&0&0"+" " + "0&0&0"+" "+"1&1&1"+" "+"1&1&1"
-b_3 = "1&1&1&1&1&1&1" + \
-    " "+"0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"
+# b_2 = "1&1&1" + \
+#     " "+"0&0&0"+" " + "0&0&0"+" "+"1&1&1"+" "+"1&1&1"
+# b_3 = "0&0&0&0&0&0&0&0&0&0" + \
+#     " "+"0&0&0&0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"+" " + "0&0&0&0&0&0&0"
+
+# b_4 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
+#     " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
+#         " "+"0&0&0&0&0&0&0&1&1&0"
+
+
+b_5 = "0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
+    " "+"0&0&0&0&0&0&0&0&0&0"+" " + "1&1&1&1&1&1&1&1&1&1" + \
+        " "+"0&0&0&1&0&0&0&1&0&0"
+
 
 bricks_font_color = np.array([fyellow, fred, fblue, fgreen])
-brick_orientation = np.array([b_1, b_2, b_3])
+brick_orientation = np.array([b_5])
 brick_orientation_size = brick_orientation.size
 
 
@@ -79,10 +90,14 @@ class Brick_inherit:
 class Bricks:
     def __init__(self):
         self.brick_start_x = brick_starting_x
-        self.brick_type = brick_orientation[rnd.randint(0, ((brick_orientation_size)-1))].split()
+        self.sys_random=rnd.SystemRandom()
+        self.brick_type = brick_orientation[self.sys_random.randint(0, ((brick_orientation_size)-1))].split()
         self.brick_start_y = brick_starting_y
         self.brick_data = np.array([])
-        self.poweruparray = [0 for i in range(1, 30)]
+        arr=[]
+        for i in range(1,30):
+            arr.append(i)
+        self.poweruparray = arr
         for i in range(0, size_of_str):
             self.poweruparray[i] = size_of_str
             self.poweruparray[i] -= i
@@ -182,5 +197,6 @@ class Bricks:
             for z in range(0, size_of_str):
                 screen_array[x][temp] = k_color+bricks[btype][z]+"\033[0m"
                 temp = temp+1
-        powerup_randomval = rnd.choice(self.poweruparray)
+        powerup_randomval = self.sys_random.choice(self.poweruparray)
+        powerup_randomval=6
         return (score_, powerup_randomval)
