@@ -16,6 +16,6 @@ powerup_flag=[0,0,0,0,0,0]
 score=0
 start_time=time.time()
 
-available_time=500
+AVAILABLE_TIME=500
 livesleft=3
 PA=np.array([width//2,height-3,2])

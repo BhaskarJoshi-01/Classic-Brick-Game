@@ -202,6 +202,7 @@ class Bricks:
 
         if(life < 1):
             temp = pnt1
+            
             for z in range(0, size_of_str):
                 PrintScreen[x][temp] = ' '
                 temp = temp+1

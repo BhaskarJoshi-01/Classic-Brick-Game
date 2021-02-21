@@ -37,6 +37,10 @@ class power0:
     def ret_status(self):
         val=self.active
         return val
+        
+    def deactivate_time(self):
+        self.time_activated = time.time() - self.max_time
+
 
     def update_status(self,value):
         self.active=value
@@ -145,8 +149,8 @@ class power5(power0):
         self.index=5
 
     def undo (self):
-        # ball_class.NeedForSpeed(-2,-2)            
+        # ball_class.NeedForSpeed(2,2)            
         return boolean_val[0]
     def do (self):
-        # ball_class.NeedForSpeed(-2,-2)  
+        # ball_class.NeedForSpeed(2,2)  
         return boolean_val[1]

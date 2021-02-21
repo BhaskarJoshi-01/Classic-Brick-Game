@@ -2,7 +2,7 @@ from objects import *
 from colorama import Fore, Back, Style
 from startingvalues import width
 
-class paddle:
+class Paddle:
     def __init__(self,cur_X,cur_Y,cur_type):
         self.cur_X=cur_X
         self.free_ball=boolean_val[0]
